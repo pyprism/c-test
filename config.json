@@ -1,0 +1,5 @@
+{
+  "secret_key": "notsosecret",
+  "hosts": "localhost",
+  "openweathermap_api": ""
+}
