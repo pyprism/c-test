@@ -8,6 +8,9 @@ class CityNameManager(models.Manager):
     def get_city_by_pk(self, pk):
         return super().filter(pk=pk).values('name').first()
 
+    def search_city(self, city):
+        return super().filter(name__icontains=city)
+
 
 class CityName(models.Model):
     name = models.CharField(max_length=50)

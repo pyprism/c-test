@@ -64,3 +64,10 @@ class AccountAPITest(TestCase):
         self.assertEqual(mock_utils.get_current_weather.return_value, {'city': 'Chittagong',
                                                                        'temperature': 16.02, 'humidity': 76,
                                                                        'feels_like': 15.66})
+
+    def test_search_city(self):
+        CityName.objects.create(name='Chittagong')
+        res = self.client.get('/v1/api/city_name/?city_name=Chittagong')
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.data['results']), 1)
+        self.assertEqual(res.data['results'][0]['name'], 'Chittagong')

@@ -22,4 +22,12 @@ class CityNameViewSet(ModelViewSet):
         current_weather = get_current_weather(pk)
         return Response({"current_weather": current_weather}, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['get'])
+    def search_city(self, request):
+        city_name = self.request.query_params.get('city_name', '')
+        city_name_list = CityName.objects.search_city(city_name)
+        page = self.paginate_queryset(city_name_list)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+
 
